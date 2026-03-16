@@ -4,9 +4,10 @@ const app = express()
 
 app.use(express.json());
 
-let users = [
-    {id: 1, name: 'John'},
-    {id: 2, name: 'Alex'},
+let tasks = [
+    {id: 1, title: 'course', done: false},
+    {id: 2, title: 'education', done: false},
+    {id: 3, title: 'education', done: false},
 ];
 
 app.get('/users', (req, res) => res.json(users));
@@ -21,6 +22,21 @@ app.post('/users', (req, res) => {
 
     res.json(newUser);
 });
+
+app.patch('/tasks/:id', (req, res) => {
+    const id = Number(req.params.id);
+    const {title, done} = req.body;
+
+    const updatedTask = {
+        id: id,
+        title: title,
+        done: done
+    }
+
+    tasks.push(updatedTask);
+
+    res.json(updatedTask);
+})
 
 app.delete('/users/:id', (req, res) => {
     const id = Number(req.params.id);
